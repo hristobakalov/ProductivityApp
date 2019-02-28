@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <style>
+        body {
+            font-family: Verdana, Geneva, sans-serif
+        }
+
+        .form {
+            width: 50%;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+        }
+
+            .form .input-field {
+                padding: 10px;
+                display: block;
+                margin: auto;
+                margin-bottom: 10px;
+                width: 70%;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+            }
+
+            .form .btn-submit {
+                display: block;
+                position: relative;
+                margin: auto;
+                margin-top: 20px;
+                width: 70%;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                background-color: #3e83f2;
+                font-weight: 700;
+                color: white;
+                -webkit-border-radius: 15px;
+                -moz-border-radius: 15px;
+                border-radius: 15px;
+            }
+    </style>
+
+    <form class="form" id="form" method="post">
+        <input type="text" class="input-field" id="task-text" placeholder="Insert task here" />
+        <input type"text" class="input-field" id="task-number" placeholder="insert numeric value here" />
+        <input type="submit" class="btn-submit" value="Add" />
+    </form>
+    <script>
+		document.querySelector("#form").addEventListener("submit", function(e){
+				e.preventDefault();    //stop form from submitting
+
+			var text = document.querySelector("#task-text").value;
+			var number = parseInt(document.querySelector("#task-number").value);
+			if(isNaN(number))
+			{
+				alert("Only numbers are allowed!");
+				return;
+			}
+			if(number < 1 || number > 100)
+			{
+				alert("Only numbers between 1 and 100 allowed!");
+				return;
+			}
+
+			console.log(text);
+			console.log(number);
+
+			var retrievedObject = JSON.parse(localStorage.getItem('test'));
+			if(retrievedObject == null || retrievedObject == ""){
+				retrievedObject = [];
+			}
+			if(!Array.isArray(retrievedObject))
+			{
+				retrievedObject = [retrievedObject];
+			}
+			var taskObject = {
+			'date': Date.now(),
+			'task': text,
+			'value': number
+			};
+
+			retrievedObject.push(taskObject);
+
+
+			localStorage.setItem('test', JSON.stringify(retrievedObject));
+
+			// Retrieve the object from storage
+			var retrievedObject = localStorage.getItem('test');
+
+			console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+			//https://www.chartjs.org/samples/latest/charts/area/line-boundaries.html
+		});
+    </script>

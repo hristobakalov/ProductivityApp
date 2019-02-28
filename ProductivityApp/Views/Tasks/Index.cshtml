@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProductivityApp.Models.Task>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form class="form" id="form" method="post">
+    <input type="text" class="input-field" id="task-text" placeholder="Insert task here" />
+    <input type"text" class="input-field" id="task-number" placeholder="insert numeric value here" />
+    <input type="submit" class="btn-submit" value="Add" />
+</form>
+
+<div class="chart-container" style="position: relative;">
+    <canvas id="myChart"></canvas>
+</div>
+
+
+<table class="table">
+    <tr id="tasks-list-header">
+        <th>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script src="~/Scripts/productivty-chart.js"></script>
